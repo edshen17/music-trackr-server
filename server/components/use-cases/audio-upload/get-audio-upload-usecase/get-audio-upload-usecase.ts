@@ -5,7 +5,6 @@ import {
 import { AbstractUseCase } from '../../abstractions/abstract-use-case';
 import { ControllerData } from '../../abstractions/i-use-case';
 import { v4 } from 'uuid';
-import { MODEL_NAME } from '../../../data-access/cache-service/cache-service';
 
 type OptionalCreateAudioUploadUseCaseInitParams = {
   makeAudioUploadEntity: Promise<AudioUploadEntity>;
@@ -29,7 +28,7 @@ class CreateAudioUploadUseCase extends AbstractUseCase<
     const { routeData } = props;
     const { body } = routeData;
     const audioUploadEntity = await this._audioUploadEntity.build(body);
-    const hashKey = MODEL_NAME.AUDIO_UPLOAD;
+    const hashKey = 'audioUpload';
     const audioUpload = <AudioUploadEntityBuildResponse>await this._cacheService.set({
       hashKey,
       key: this._uuidv4(),

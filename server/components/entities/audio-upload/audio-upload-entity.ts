@@ -8,6 +8,7 @@ type OptionalAudioUploadEntityInitParams = {
 type AudioUploadEntityBuildResponse = {
   _id: string;
   userId: string;
+  fileName: string;
   sourceUrl: string;
   createdDate: Date;
   lastModifiedDate: Date;
@@ -28,10 +29,11 @@ class AudioUploadEntity extends AbstractEntity<
   protected _buildTemplate = async (
     buildParams: AudioUploadEntityBuildParams
   ): Promise<AudioUploadEntityBuildResponse> => {
-    const { userId, sourceUrl } = buildParams;
+    const { userId, sourceUrl, fileName } = buildParams;
     const audioUploadEntity = {
       _id: this._uuidv4(),
       userId,
+      fileName,
       sourceUrl,
       createdDate: new Date(),
       lastModifiedDate: new Date(),

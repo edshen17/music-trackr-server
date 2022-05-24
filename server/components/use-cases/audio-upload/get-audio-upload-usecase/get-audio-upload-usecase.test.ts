@@ -1,19 +1,17 @@
 import { expect } from 'chai';
 import { Request } from 'express';
-import { makeCreateAudioUploadUseCase } from '.';
 import { UserData } from '../../../web-driver-callbacks/express/abstractions/i-http-request';
 import { RouteData } from '../../abstractions/i-use-case';
 import { makeControllerDataBuilder } from '../../utils/controller-data-builder';
 import { ControllerDataBuilder } from '../../utils/controller-data-builder/controller-data-builder';
-import { CreateAudioUploadUseCase } from './create-audio-upload-use-case';
 
-let createAudioUploadUseCase: CreateAudioUploadUseCase;
+let getAudioUploadUseCase: GetAudioUploadUseCase;
 let controllerDataBuilder: ControllerDataBuilder;
 let routeData: RouteData;
 let userData: UserData;
 
 before(async () => {
-  createAudioUploadUseCase = await makeCreateAudioUploadUseCase;
+  getAudioUploadUseCase = await makeGetAudioUploadUseCase;
   controllerDataBuilder = makeControllerDataBuilder;
 });
 
@@ -51,7 +49,6 @@ describe('createAudioUploadUseCase', () => {
         routeData.body = {
           userId: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
           sourceUrl: 'https://fakeimg.pl/300/',
-          fileName: 'some file name',
         };
         const audioUpload = await createAudioUpload();
         expect(audioUpload.userId).to.deep.equal(routeData.body.userId);

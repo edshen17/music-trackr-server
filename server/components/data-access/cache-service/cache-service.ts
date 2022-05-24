@@ -13,6 +13,10 @@ enum CACHE_TTL {
   HOUR = 60 * 60,
 }
 
+enum MODEL_NAME {
+  AUDIO_UPLOAD = 'audioUpload',
+}
+
 class CacheService {
   private _redisClient!: RedisClientType;
   private _dayjs!: typeof dayjs;
@@ -103,4 +107,4 @@ class CacheService {
   };
 }
 
-export { CacheService, CACHE_TTL };
+export { CacheService, CACHE_TTL, MODEL_NAME };

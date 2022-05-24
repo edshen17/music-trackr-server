@@ -13,6 +13,7 @@ before(() => {
     buildParams: {
       userId: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
       sourceUrl: 'https://fakeimg.pl/300/',
+      fileName: 'some file name',
     },
   };
 });

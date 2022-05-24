@@ -15,6 +15,7 @@ describe('audioUploadEntity', () => {
         const buildParams = {
           userId: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
           sourceUrl: 'https://fakeimg.pl/300/',
+          fileName: 'some file name',
         };
         const audioEntity = await audioUploadEntity.build(buildParams);
         expect(audioEntity.userId).to.deep.equal(buildParams.userId);
@@ -26,6 +27,7 @@ describe('audioUploadEntity', () => {
           audioUploadEntity.build({
             userId: 'bad id',
             sourceUrl: '',
+            fileName: 'some file name',
           });
         } catch (err) {
           expect(err).to.be.an('error');
