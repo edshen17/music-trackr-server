@@ -8,7 +8,7 @@ import { UserData } from '../../../web-driver-callbacks/express/abstractions/i-h
 import { RouteData } from '../../abstractions/i-use-case';
 import { makeControllerDataBuilder } from '../../utils/controller-data-builder';
 import { ControllerDataBuilder } from '../../utils/controller-data-builder/controller-data-builder';
-import { GetAudioUploadUseCase } from './get-audio-upload-usecase';
+import { GetAudioUploadUseCase } from './get-audio-upload-use-case';
 
 let getAudioUploadUseCase: GetAudioUploadUseCase;
 let audioUploadTestFixture: AudioUploadTestFixture;
@@ -30,7 +30,7 @@ beforeEach(async () => {
     path: '',
     query: {},
     params: {
-      _id: mockAudioUpload._id,
+      audioUploadId: mockAudioUpload._id,
     },
     headers: {},
     cookies: {},
@@ -58,7 +58,7 @@ describe('getAudioUploadUseCase', () => {
     context('valid inputs', () => {
       it('should get an audio upload with the given id', async () => {
         const audioUpload = await getAudioUpload();
-        expect(audioUpload._id).to.deep.equal(routeData.params._id);
+        expect(audioUpload._id).to.deep.equal(routeData.params.audioUploadId);
       });
     });
     context('invalid inputs', () => {

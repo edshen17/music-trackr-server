@@ -5,5 +5,6 @@ import { makeJsonExpressCallback } from '../../../components/web-driver-callback
 const audioUploads = express.Router();
 
 audioUploads.post('/', makeJsonExpressCallback.consume(makeCreateAudioUploadController));
+// audioUploads.get('/:audioUploadId', makeJsonExpressCallback.consume(makeGetAudioUploadUseCase))
 
 export { audioUploads };

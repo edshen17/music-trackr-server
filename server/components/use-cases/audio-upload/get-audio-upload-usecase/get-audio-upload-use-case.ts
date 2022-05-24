@@ -18,10 +18,10 @@ class GetAudioUploadUseCase extends AbstractUseCase<
   ): Promise<GetAudioUploadUseCaseResponse> => {
     const { routeData } = props;
     const { params } = routeData;
-    const { _id } = params;
+    const { audioUploadId } = params;
     const audioUpload = <AudioUploadEntityBuildResponse>await this._cacheService.get({
       hashKey: MODEL_NAME.AUDIO_UPLOAD,
-      key: _id,
+      key: audioUploadId,
     });
     return { audioUpload };
   };
