@@ -1,26 +1,37 @@
 import { expect } from 'chai';
 import { Request } from 'express';
+import { makeGetAudioUploadUseCase } from '.';
+import { AudioUploadEntityBuildResponse } from '../../../entities/audio-upload/audio-upload-entity';
+import { makeAudioUploadTestFixture } from '../../../test-fixtures/audio-upload';
+import { AudioUploadTestFixture } from '../../../test-fixtures/audio-upload/audio-upload-test-fixture';
 import { UserData } from '../../../web-driver-callbacks/express/abstractions/i-http-request';
 import { RouteData } from '../../abstractions/i-use-case';
 import { makeControllerDataBuilder } from '../../utils/controller-data-builder';
 import { ControllerDataBuilder } from '../../utils/controller-data-builder/controller-data-builder';
+import { GetAudioUploadUseCase } from './get-audio-upload-usecase';
 
 let getAudioUploadUseCase: GetAudioUploadUseCase;
+let audioUploadTestFixture: AudioUploadTestFixture;
 let controllerDataBuilder: ControllerDataBuilder;
+let mockAudioUpload: AudioUploadEntityBuildResponse;
 let routeData: RouteData;
 let userData: UserData;
 
 before(async () => {
   getAudioUploadUseCase = await makeGetAudioUploadUseCase;
+  audioUploadTestFixture = await makeAudioUploadTestFixture;
   controllerDataBuilder = makeControllerDataBuilder;
 });
 
 beforeEach(async () => {
+  mockAudioUpload = await audioUploadTestFixture.createMockData();
   routeData = {
     body: {},
     path: '',
     query: {},
-    params: {},
+    params: {
+      _id: mockAudioUpload._id,
+    },
     headers: {},
     cookies: {},
     req: {} as Request,
@@ -28,45 +39,33 @@ beforeEach(async () => {
   userData = {};
 });
 
-describe('createAudioUploadUseCase', () => {
+describe('getAudioUploadUseCase', () => {
   describe('makeRequest', () => {
-    const createAudioUpload = async () => {
+    const getAudioUpload = async () => {
       const controllerData = controllerDataBuilder.userData(userData).routeData(routeData).build();
-      const { audioUpload } = await createAudioUploadUseCase.makeRequest(controllerData);
+      const { audioUpload } = await getAudioUploadUseCase.makeRequest(controllerData);
       return audioUpload;
     };
-    const createAudioUploadError = async (): Promise<Error> => {
+    const getAudioUploadError = async (): Promise<Error> => {
       let error;
       try {
-        await createAudioUpload();
+        await getAudioUpload();
       } catch (err) {
         error = err;
       }
       return error as Error;
     };
     context('valid inputs', () => {
-      it('should return the saved audio upload', async () => {
-        routeData.body = {
-          userId: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
-          sourceUrl: 'https://fakeimg.pl/300/',
-        };
-        const audioUpload = await createAudioUpload();
-        expect(audioUpload.userId).to.deep.equal(routeData.body.userId);
-        expect(audioUpload.sourceUrl).to.deep.equal(routeData.body.sourceUrl);
+      it('should get an audio upload with the given id', async () => {
+        const audioUpload = await getAudioUpload();
+        expect(audioUpload._id).to.deep.equal(routeData.params._id);
       });
     });
     context('invalid inputs', () => {
-      it('should throw an error if body is empty', async () => {
-        const error = await createAudioUploadError();
+      it('should throw an error if audio upload not found', async () => {
+        routeData.params = {};
+        const error = await getAudioUploadError();
         expect(error).to.have.property('message');
-      });
-      it('should throw an error if at least one value is incorrect', async () => {
-        routeData.body = {
-          userId: 'bad id',
-          sourceUrl: 'https://fakeimg.pl/300/',
-        };
-        const error = await createAudioUploadError();
-        expect(error.message).to.equal('"userId" must be a valid GUID');
       });
     });
   });
