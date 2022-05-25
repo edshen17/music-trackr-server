@@ -9,7 +9,6 @@ import { MODEL_NAME } from '../../../data-access/cache-service/cache-service';
 
 type OptionalCreateAudioUploadUseCaseInitParams = {
   makeAudioUploadEntity: Promise<AudioUploadEntity>;
-  uuidv4: typeof v4;
 };
 
 type CreateAudioUploadUseCaseResponse = {
@@ -21,7 +20,6 @@ class CreateAudioUploadUseCase extends AbstractUseCase<
   CreateAudioUploadUseCaseResponse
 > {
   private _audioUploadEntity!: AudioUploadEntity;
-  private _uuidv4!: typeof v4;
 
   protected _makeRequestTemplate = async (
     props: ControllerData
@@ -32,7 +30,7 @@ class CreateAudioUploadUseCase extends AbstractUseCase<
     const hashKey = MODEL_NAME.AUDIO_UPLOAD;
     const audioUpload = <AudioUploadEntityBuildResponse>await this._cacheService.set({
       hashKey,
-      key: this._uuidv4(),
+      key: audioUploadEntity._id,
       value: audioUploadEntity,
     });
     return { audioUpload };
@@ -41,9 +39,8 @@ class CreateAudioUploadUseCase extends AbstractUseCase<
   protected _initTemplate = async (
     optionalInitParams: OptionalCreateAudioUploadUseCaseInitParams
   ): Promise<void> => {
-    const { makeAudioUploadEntity, uuidv4 } = optionalInitParams;
+    const { makeAudioUploadEntity } = optionalInitParams;
     this._audioUploadEntity = await makeAudioUploadEntity;
-    this._uuidv4 = uuidv4;
   };
 }
 

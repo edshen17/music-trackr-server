@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EXPRESS_PORT = exports.REDIS_URL_DEV = exports.REDIS_URL = exports.IS_PRODUCTION = void 0;
+const IS_PRODUCTION = process.env.NODE_ENV == 'production';
+exports.IS_PRODUCTION = IS_PRODUCTION;
+const REDIS_URL = process.env.REDIS_URL;
+exports.REDIS_URL = REDIS_URL;
+const REDIS_URL_DEV = process.env.REDIS_URL_DEV;
+exports.REDIS_URL_DEV = REDIS_URL_DEV;
+const EXPRESS_PORT = process.env.EXPRESS_PORT;
+exports.EXPRESS_PORT = EXPRESS_PORT;

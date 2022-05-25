@@ -29,6 +29,11 @@
     "kill": "taskkill /F /IM node.exe",
     "client": "cd client && npm run serve"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "client/*"
+    ]
+  },
   "author": "Edwin Shen",
   "license": "ISC",
   "dependencies": {

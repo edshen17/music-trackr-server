@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.makeJsonCookieExpressCallback = exports.makeJsonExpressCallback = exports.makeCookieRedirectExpressCallback = exports.makeRedirectExpressCallback = exports.makeCookieExpressCallback = void 0;
+const cookie_callback_decorator_1 = require("./decorators/cookie-callback-decorator");
+const json_callback_decorator_1 = require("./decorators/json-callback-decorator");
+const redirect_callback_decorator_1 = require("./decorators/redirect-callback-decorator");
+const express_callback_1 = require("./express-callback");
+const makeExpressCallback = new express_callback_1.ExpressCallback();
+const makeCookieExpressCallback = new cookie_callback_decorator_1.CookieCallbackDecorator(makeExpressCallback);
+exports.makeCookieExpressCallback = makeCookieExpressCallback;
+const makeRedirectExpressCallback = new redirect_callback_decorator_1.RedirectCallbackDecorator(makeExpressCallback);
+exports.makeRedirectExpressCallback = makeRedirectExpressCallback;
+const makeCookieRedirectExpressCallback = new cookie_callback_decorator_1.CookieCallbackDecorator(makeRedirectExpressCallback);
+exports.makeCookieRedirectExpressCallback = makeCookieRedirectExpressCallback;
+const makeJsonExpressCallback = new json_callback_decorator_1.JsonCallbackDecorator(makeExpressCallback);
+exports.makeJsonExpressCallback = makeJsonExpressCallback;
+const makeJsonCookieExpressCallback = new json_callback_decorator_1.JsonCallbackDecorator(makeCookieExpressCallback);
+exports.makeJsonCookieExpressCallback = makeJsonCookieExpressCallback;
