@@ -2,14 +2,13 @@ require('dotenv').config({ path: '.env' });
 import compression from 'compression';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import http from 'http';
 import { api } from './routes/api';
 import { IS_PRODUCTION } from './constants';
 
 const app = express();
 const corsConfig = {
-  origin: true,
+  origin: 'https://desolate-reaches-15214.herokuapp.com',
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   preflightContinue: false,
@@ -17,15 +16,10 @@ const corsConfig = {
 };
 
 // Middleware
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 app.use(cors(corsConfig));
 app.enable('trust proxy');
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  })
-);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(compression());
 app.use('/api', api);
 
@@ -45,6 +39,7 @@ if (IS_PRODUCTION) {
 }
 
 app.use(express.static('public'));
+
 const port = process.env.PORT || 5000;
 
 http.createServer(app).listen(port, function () {
