@@ -17,9 +17,9 @@ const corsConfig = {
 };
 
 // Middleware
-app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsConfig));
+app.use(express.json());
 app.enable('trust proxy');
 app.use(
   helmet({
