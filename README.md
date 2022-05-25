@@ -1,6 +1,6 @@
 ## Getting Started
 
-These instructions will help you get a copy of the project up and running for development and testing purposes.
+These instructions will help you get a copy of the project up and running for development and testing purposes. For client-side code, refer to the [client repo](https://github.com/edshen17/music-trackr-client).
 
 ### Installation
 1. `npm install`.
